@@ -12,7 +12,7 @@ import {
 } from './store/services/TasksService.js';
 
 import TaskList from './components/TaskList';
-import TaskForm from './components/TaskForm';
+import TaskForm from './components/TaskForm.jsx';
 
 function App() {
   const [getTasks] = useLazyGetTasksQuery();

@@ -72,8 +72,8 @@ const TaskForm = ({ createTask }) => {
             value={status}
             onChange={e => setStatus(e.target.value)}
           >
-            <option value='pending'>Pending</option>
             <option value='completed'>Completed</option>
+            <option value='not completed'>Not completed</option>
           </Form.Control>
         </Form.Group>
 

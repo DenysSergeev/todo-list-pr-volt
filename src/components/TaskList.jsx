@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, ListGroup, Modal, Form } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 
@@ -13,8 +13,32 @@ const TaskList = ({ editTask, deleteTask }) => {
   const [editedTask, setEditedTask] = useState({
     id: null,
     title: '',
-    status: 'pending',
+    status: 'completed',
     date: new Date(),
+  });
+  const [filterType, setFilterType] = useState('all');
+
+  const completedTasksCount = list.filter(
+    task => task.status === 'completed'
+  ).length;
+  const uncompletedTasksCount = list.filter(
+    task => task.status === 'not completed'
+  ).length;
+
+  useEffect(() => {
+    setEditedTask({
+      id: null,
+      title: '',
+      status: filterType === 'completed' ? 'completed' : 'not completed',
+      date: new Date(),
+    });
+  }, [filterType]);
+
+  const filteredList = list.filter(task => {
+    if (filterType === 'all') return true;
+    return filterType === 'completed'
+      ? task.status === 'completed'
+      : task.status === 'not completed';
   });
 
   const handleEdit = task => {
@@ -36,8 +60,36 @@ const TaskList = ({ editTask, deleteTask }) => {
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif' }}>
       <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Task List</h2>
 
+      <div style={{ marginBottom: '10px' }}>
+        <Button
+          variant='outline-primary'
+          style={{ marginRight: '10px' }}
+          onClick={() => setFilterType('all')}
+        >
+          All
+        </Button>
+        <Button
+          variant='outline-primary'
+          style={{ marginRight: '10px' }}
+          onClick={() => setFilterType('completed')}
+        >
+          Completed
+        </Button>
+        <Button variant='outline-primary' onClick={() => setFilterType('not complited')}>
+          Current
+        </Button>
+      </div>
+
+      <div style={{ marginBottom: '10px' }}>
+        Completed Tasks: {completedTasksCount}
+      </div>
+
+      <div style={{ marginBottom: '20px' }}>
+        Uncompleted Tasks: {uncompletedTasksCount}
+      </div>
+
       <ListGroup style={{ maxWidth: '600px', margin: '0 auto' }}>
-        {list.map(task => (
+        {filteredList.map(task => (
           <ListGroup.Item
             key={task.id}
             style={{
@@ -70,7 +122,7 @@ const TaskList = ({ editTask, deleteTask }) => {
 
             <div>
               <Button
-                variant='info'
+                variant='secondary'
                 style={{ marginRight: '10px' }}
                 onClick={() => handleEdit(task)}
               >
@@ -129,8 +181,8 @@ const TaskList = ({ editTask, deleteTask }) => {
                   setEditedTask({ ...editedTask, status: e.target.value })
                 }
               >
-                <option value='pending'>Pending</option>
                 <option value='completed'>Completed</option>
+                <option value='not completed'>Not Completed</option>
               </Form.Control>
             </Form.Group>
 
