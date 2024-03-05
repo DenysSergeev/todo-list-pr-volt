@@ -1,60 +1,60 @@
-import React, { useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React, { useEffect } from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
 
-import { useTypedDispatch, useTypedSelector } from './store/store.js';
-import { setTasks } from './store/slices/tasksSlice.js';
+import { useTypedDispatch, useTypedSelector } from './store/store.js'
+import { setTasks } from './store/slices/tasksSlice.js'
 
 import {
   useLazyGetTasksQuery,
   useLazyCreateTaskQuery,
   useLazyEditTaskQuery,
   useLazyDeleteTaskQuery,
-} from './store/services/TasksService.js';
+} from './store/services/TasksService.js'
 
-import TaskList from './components/TaskList';
-import TaskForm from './components/TaskForm.jsx';
+import TaskList from './components/TaskList'
+import TaskForm from './components/TaskForm.jsx'
 
 function App() {
-  const [getTasks] = useLazyGetTasksQuery();
-  const [createTask] = useLazyCreateTaskQuery();
-  const [editTask] = useLazyEditTaskQuery();
-  const [deleteTask] = useLazyDeleteTaskQuery();
-  const dispatch = useTypedDispatch();
+  const [getTasks] = useLazyGetTasksQuery()
+  const [createTask] = useLazyCreateTaskQuery()
+  const [editTask] = useLazyEditTaskQuery()
+  const [deleteTask] = useLazyDeleteTaskQuery()
+  const dispatch = useTypedDispatch()
 
-  const { list } = useTypedSelector(state => state.tasks);
+  const { list } = useTypedSelector((state) => state.tasks)
 
   const initTasks = () => {
-    getTasks();
-  };
+    getTasks()
+  }
 
-  const updateTask = async editedTask => {
+  const updateTask = async (editedTask) => {
     try {
-      const updatedList = structuredClone(list);
+      const updatedList = structuredClone(list)
       const editedTaskIndex = updatedList.findIndex(
-        task => task.id === editedTask.id
-      );
+        (task) => task.id === editedTask.id,
+      )
 
-      updatedList[editedTaskIndex] = editedTask;
+      updatedList[editedTaskIndex] = editedTask
 
-      await editTask(editedTask);
-      dispatch(setTasks(updatedList));
+      await editTask(editedTask)
+      dispatch(setTasks(updatedList))
     } catch (error) {
-      console.log('updateTask error: ', error);
+      console.log('updateTask error:', error)
     }
-  };
+  }
 
-  const removeTask = async taskId => {
+  const removeTask = async (taskId) => {
     try {
-      const updatedTasks = list.filter(task => task.id !== taskId);
+      const updatedTasks = list.filter((task) => task.id !== taskId)
 
-      await deleteTask(taskId);
-      dispatch(setTasks(updatedTasks));
+      await deleteTask(taskId)
+      dispatch(setTasks(updatedTasks))
     } catch (error) {
-      console.log('handleDelete error: ', error);
+      console.log('handleDelete error:', error)
     }
-  };
+  }
 
-  useEffect(initTasks, []);
+  useEffect(initTasks, [])
 
   return (
     <Container>
@@ -68,7 +68,7 @@ function App() {
         </Col>
       </Row>
     </Container>
-  );
+  )
 }
 
-export default App;
+export default App

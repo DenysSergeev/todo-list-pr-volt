@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
-import { Alert, Button, Form } from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
+import React, { useState } from 'react'
+import { Alert, Button, Form } from 'react-bootstrap'
+import DatePicker from 'react-datepicker'
 
-import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.css'
 
 const TaskForm = ({ createTask }) => {
-  const [title, setTitle] = useState('');
-  const [status, setStatus] = useState('pending');
-  const [date, setDate] = useState(new Date());
-  const [error, setError] = useState(null);
+  const [title, setTitle] = useState('')
+  const [status, setStatus] = useState('completed')
+  const [date, setDate] = useState(new Date())
+  const [error, setError] = useState(null)
 
-  const maxLength = 8;
+  const maxLength = 8
 
   const handleSubmit = e => {
     e.preventDefault();
 
     if (title.trim() === '') {
-      setError('Title cannot be empty!');
+      setError('Title cannot be empty!')
     } else if (title.length <= maxLength) {
-      createTask({ title, status, date });
-      setError(null);
+      createTask({ title, status, date })
+      setError(null)
     } else {
-      setError('Title is too long!');
+      setError('Title is too long!')
     }
   };
 

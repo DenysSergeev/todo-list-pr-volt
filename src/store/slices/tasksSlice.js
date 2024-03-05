@@ -1,17 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { TasksAPI } from '../services/TasksService.js';
+import { createSlice } from '@reduxjs/toolkit'
+import { TasksAPI } from '../services/TasksService.js'
 
 const initialState = {
-  isLoading: true,
-  list: [],
-};
+  'isLoading': true,
+  'list': [],
+}
 
 const tasksSlice = createSlice({
-  name: 'tasks',
+  'name': 'tasks',
   initialState,
-  reducers: {
-    setTasks: (state, action) => {
-      state.list = action.payload;
+  'reducers': {
+    'setTasks': (state, action) => {
+      state.list = action.payload
     },
   },
   extraReducers(builder) {
@@ -19,20 +19,20 @@ const tasksSlice = createSlice({
       .addMatcher(
         TasksAPI.endpoints.getTasks.matchFulfilled,
         (state, action) => {
-          state.list = action.payload;
-          state.isLoading = false;
-        }
+          state.list = action.payload
+          state.isLoading = false
+        },
       )
       .addMatcher(
         TasksAPI.endpoints.createTask.matchFulfilled,
         (state, action) => {
-          state.list = [...state.list, action.payload];
-          state.isLoading = false;
-        }
-      );
+          state.list = [...state.list, action.payload]
+          state.isLoading = false
+        },
+      )
   },
-});
+})
 
-export const { setTasks } = tasksSlice.actions;
+export const { setTasks } = tasksSlice.actions
 
-export default tasksSlice.reducer;
+export default tasksSlice.reducer

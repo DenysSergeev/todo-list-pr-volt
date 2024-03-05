@@ -75,7 +75,10 @@ const TaskList = ({ editTask, deleteTask }) => {
         >
           Completed
         </Button>
-        <Button variant='outline-primary' onClick={() => setFilterType('not complited')}>
+        <Button
+          variant='outline-primary'
+          onClick={() => setFilterType('not complited')}
+        >
           Current
         </Button>
       </div>
