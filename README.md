@@ -1,4 +1,4 @@
-# CRUD task-managment
+# PR Volt LLC
 
 ## Prerequisites
 
@@ -9,7 +9,7 @@ Make sure you have the following installed:
 ## Setup
 
 1. Clone the repository:
-   git@github.com:DenysSergeev/CRUD-task-management.git
+   git@github.com:DenysSergeev/todo-list-pr-volt.git
 
 2. Switch to Node.js version 18.17.0 using [Node Version Manager (nvm)](https://github.com/nvm-sh/nvm):
    `nvm use 18.17.0`
